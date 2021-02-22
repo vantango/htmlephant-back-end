@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS htmlephant;
+CREATE DATABASE htmlephant;

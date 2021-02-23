@@ -21,7 +21,7 @@
     "ace-builds": "^1.4.12",
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.17",
-    "react-ace": "^9.3.0"
+    "express-session": "^1.17.1",
+    "mongoose": "^5.11.17"
   }
 }

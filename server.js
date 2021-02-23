@@ -2,8 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const db = require("./models");
-
-
+const session = require('express-session');
 
 const PORT = process.env.port || 8080;
 
@@ -19,6 +18,16 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
     useFindAndModify: false,
     useUnifiedTopology: true
 });
+
+// Sets up sessions for user login
+app.use(session({
+    secret: 'What does despensa mean? ',
+    resave: false,
+    saveUninitialied: false,
+    cookies: {
+      maxAge: 1000 * 60 * 60 * 2
+    }
+  }));
 
 // Routes
 const userRoutes = require("./controllers/userController");

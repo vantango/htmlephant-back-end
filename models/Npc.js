@@ -12,11 +12,13 @@ const NpcSchema = new Schema({
         default: "Manatee Joe"
     },
     dialogue: {
-        type: [String],
+        type: String,
         required: true,
-        default: ["Oh, jeez.", "For the love of god!", "Sam's Canned Ham Yams"]
+        default: "Oh, Jeez"
     }
 });
+
+
 
 const Npc = mongoose.model("Npc", NpcSchema)
 module.exports = Npc;

@@ -1,35 +1,30 @@
 // Dependencies
-const bcrypt = require('bcrypt');
-const sequelize = require("sequelize")
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
-// Create Users table with id, username, password, animal choice
-module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("User", {
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [8]
-            }
-        },
-        character: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: "Cat"
-        }
-    });
+// Schema instance
+const Schema = mongoose.Schema;
 
-    // Each user has one state, which is deleted if the user is deleted
-    User.associate = (models) => {
-        User.hasOne(models.State), {
-            onDelete: "cascade"
-        }
-    };
+// Shape our NPC object
+const UserSchema = new Schema({
+    username: {
+        type: String,
+        trim: true,
+        unique: true,
+        required: "What do we call you, friend?"
+    },
+    password: {
+        type: String,
+        trim: true,
+        validate: [({ length }) => length >= 8, "Oh c'mon, your password should be longer that THAT."]
+    },
+    character: {
+        type: String,
+        required: true,
+        default: "Cat"
+    }
 
-    return User;
-}
+});
+
+const User = mongoose.model("User", UserSchema)
+module.exports = User;

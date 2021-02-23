@@ -21,9 +21,9 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
 });
 
 // Routes
-app.get("/", (req, res) => {
-    res.send("Oh, you want some stuff? Here's some stuff.")
-})
+const userRoutes = require("./controllers/userController");
+
+
 
 // Start our server so that it can begin listening to client requests.
 // 'force: true' drops the database/tables and recreates everything

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 // Schema instance
 const Schema = mongoose.Schema;
 
-// Shape our NPC object
+// Shape our User object
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -22,9 +22,15 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         default: "Cat"
+    },
+    level: {
+        type: Number,
+        required: true,
+        default: 1
     }
 
 });
 
 const User = mongoose.model("User", UserSchema)
 module.exports = User;
+

@@ -12,9 +12,9 @@ const NpcSchema = new Schema({
         default: "Manatee Joe"
     },
     dialogue: {
-        type: String,
+        type: [String],
         required: true,
-        default: "Oh, Jeez"
+        default: ["Oh, Jeez", "For the love of god!", "Sam's Canned Ham Yams."]
     }
 });
 

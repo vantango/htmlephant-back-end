@@ -21,18 +21,21 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
 
 // Sets up sessions for user login
 app.use(session({
-    secret: 'What does despensa mean? ',
+    secret: 'Oh, jeez.',
     resave: false,
     saveUninitialied: false,
     cookies: {
-      maxAge: 1000 * 60 * 60 * 2
+        maxAge: 1000 * 60 * 60 * 2
     }
-  }));
+}));
 
-// Routes
+// Define routes
 const userRoutes = require("./controllers/userController");
+const npcRoutes = require("./controllers/npcController");
 
-app.use(userRoutes)
+// Use routes
+app.use(npcRoutes);
+app.use(userRoutes);
 
 // Start our server so that it can begin listening to client requests.
 // 'force: true' drops the database/tables and recreates everything

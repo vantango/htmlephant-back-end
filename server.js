@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
 // Routes
 const userRoutes = require("./controllers/userController");
 
-
+app.use(userRoutes)
 
 // Start our server so that it can begin listening to client requests.
 // 'force: true' drops the database/tables and recreates everything

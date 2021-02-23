@@ -52,3 +52,5 @@ router.get("/logout", (req, res) => {
     res.send("Goodbye.");
 });
 
+module.exports = router;
+

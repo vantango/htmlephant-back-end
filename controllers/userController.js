@@ -32,7 +32,7 @@ router.post("/login", (req, res) => {
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        res.status(500).send("Oh wow look, you broke it.")
+        err ? res.status(500).send("Oh wow look, you broke it.") : res.status(200).send("Success!")
     });
 });
 
@@ -51,6 +51,20 @@ router.get("/logout", (req, res) => {
     req.session.destroy();
     res.send("Goodbye.");
 });
+
+// Function to create user
+async function createUser(data, cb) {
+    db.User.create({
+        username: data.username,
+        password: bcrypt.hashSync(data.password, 10),
+        character: data.character,
+        level: 1
+    }).then(user => {
+        cb(user);
+    }).catch(err => {
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+    });
+}
 
 module.exports = router;
 

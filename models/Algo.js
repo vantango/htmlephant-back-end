@@ -20,16 +20,10 @@ const AlgoSchema = new Schema({
         required: true,
         default: "Easy"
     },
-    arguments: {
-        type: String,
-        required: true,
-        default: "tacocat"
-    },
-    output: {
+    argsAndOutput: {
         type: String,
         required: true
     }
-    // TODO: Figure out how to store arguments and expected output with different data types
 });
 
 const Algo = mongoose.model("Algo", AlgoSchema)

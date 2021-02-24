@@ -29,7 +29,6 @@ const AlgoSchema = new Schema({
         type: String,
         required: true
     }
-    // TODO: Figure out how to store arguments and expected output with different data types
 });
 
 const Algo = mongoose.model("Algo", AlgoSchema)

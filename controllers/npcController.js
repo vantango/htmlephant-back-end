@@ -5,7 +5,7 @@ const db = require("../models");
 // Express router instance
 const router = express.Router()
 
-// Create NPC
+// NPC Seeds
 const seedData = [
     {
         name: "Joe",
@@ -17,21 +17,31 @@ const seedData = [
     },
     {
         name: "Zac",
-        dialogue: ["Blah blah drums", "Blah blah dog", "Wow get a catchphrase"]
+        dialogue: ["Blah blah drums", "Blah blah dog", "You got this!"]
     },
     {
         name: "Denis",
-        dialogue: ["mac and cheese", "Mac and Cheese.", "MAC AND CHEESE!"]
+        dialogue: ["...", "*appears silently*", "MAC AND CHEESE!"]
     }
 ]
 
+// Seed route for NPC characters
 router.get("/seednpc", (req, res) => {
     db.Npc.create(seedData).then(result => {
         console.log(`Here's your npcs: ${JSON.stringify(result, null, 2)}`);
-        res.send("success mofo")
     }).catch(err => {
-        console.log(err.message)
-    })
+        err ? res.status(500).send(err.message) : res.send("Success!")
+    });
+});
+
+// API route for NPC characters
+router.get("/api/npc", (req, res) => {
+    db.Npc.find({}).then(data => {
+        console.log(`Here they all are fool: ${JSON.stringify(data, null, 2)}`);
+        res.json(data);
+    }).catch(err => {
+        err ? res.status(500).send(err.message) : res.send("Success!")
+    });
 });
 
 module.exports = router;

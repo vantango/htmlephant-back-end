@@ -32,10 +32,17 @@ app.use(session({
 // Define routes
 const userRoutes = require("./controllers/userController");
 const npcRoutes = require("./controllers/npcController");
+const algoRoutes = require("./controllers/algoController");
+
+// In case anyone tries to visit the deployed server
+app.get("/", (req, res) => {
+    res.send("Go away, I'm trying to eat my mac and cheese.")
+})
 
 // Use routes
 app.use(npcRoutes);
 app.use(userRoutes);
+app.use(algoRoutes);
 
 // Start our server so that it can begin listening to client requests.
 // 'force: true' drops the database/tables and recreates everything

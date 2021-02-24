@@ -20,12 +20,7 @@ const AlgoSchema = new Schema({
         required: true,
         default: "Easy"
     },
-    arguments: {
-        type: String,
-        required: true,
-        default: "tacocat"
-    },
-    output: {
+    argsAndOutput: {
         type: String,
         required: true
     }

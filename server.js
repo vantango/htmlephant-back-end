@@ -1,0 +1,52 @@
+// Dependencies and server config
+const express = require("express");
+const mongoose = require("mongoose");
+const db = require("./models");
+const session = require('express-session');
+
+const PORT = process.env.port || 8080;
+
+const app = express();
+
+// Parse application body
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Connect to mongoose database
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+});
+
+// Sets up sessions for user login
+app.use(session({
+    secret: 'Oh, jeez.',
+    resave: false,
+    saveUninitialied: false,
+    cookies: {
+        maxAge: 1000 * 60 * 60 * 2
+    }
+}));
+
+// Define routes
+const userRoutes = require("./controllers/userController");
+const npcRoutes = require("./controllers/npcController");
+const algoRoutes = require("./controllers/algoController");
+
+// In case anyone tries to visit the deployed server
+app.get("/", (req, res) => {
+    res.send("Go away, I'm trying to eat my mac and cheese.")
+})
+
+// Use routes
+app.use(npcRoutes);
+app.use(userRoutes);
+app.use(algoRoutes);
+
+// Start our server so that it can begin listening to client requests.
+// 'force: true' drops the database/tables and recreates everything
+
+app.listen(PORT, function () {
+    console.log('App listening on PORT ' + PORT);
+});

@@ -30,7 +30,7 @@ router.post("/login", (req, res) => {
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        err ? res.status(500).send("Oh wow look, you broke it.") : console.log("Success!")
+        err ? res.status(500).send("Oh wow look, you broke it.") : res.status(200).send("Success!")
     });
 });
 
@@ -60,7 +60,7 @@ async function createUser(data, cb) {
     }).then(user => {
         cb(user);
     }).catch(err => {
-        err ? res.status(500).send(err.message) : console.log(`This is user: ${JSON.stringify(user, null, 2)}`);
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     });
 }
 

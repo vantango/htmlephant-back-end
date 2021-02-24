@@ -6,6 +6,7 @@ const db = require("../models");
 const router = express.Router()
 
 // NPC Seeds
+// Front-end will need to use JSON.parse(response.argsAndOutput) to access argsAndOutput as json objects
 const seedAlgo = [
     {
         question: "Write code to print the first character in a given string that is not a duplicate.",
@@ -36,10 +37,9 @@ const seedAlgo = [
 // Seed route for NPC characters
 router.get("/seedalgo", (req, res) => {
     db.Algo.create(seedAlgo).then(result => {
-        console.log(`Here's your algos: ${JSON.stringify(result, null, 2)}`);
-        res.send("success mofo")
+        res.send(`Congratulations! You have created: ${JSON.stringify(result, null, 2)}`)
     }).catch(err => {
-        console.log(err.message)
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     });
 });
 
@@ -48,18 +48,17 @@ router.get("/api/algo", (req, res) => {
     db.Algo.find({}).then(data => {
         res.json(data);
     }).catch(err => {
-        err ? res.status(500).send(err.message) : console.log(`Here they all are fool: ${JSON.stringify(data, null, 2)}`)
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     });
 });
 
 // API route for one random algorithm
-// Front-end will need to use JSON.parse(response.argsAndOutput) to use json object for algorithms
 router.get("/api/random", (req, res) => {
     db.Algo.find({}).then(data => {
         const randomAlgo = data[Math.floor(Math.random() * data.length)];
         res.json(randomAlgo);
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.send("Success!")
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     })
 });
 
@@ -68,9 +67,8 @@ router.get("/api/hard", (req, res) => {
     db.Algo.find({ difficulty: "Hard" }).then(data => {
         const hardAlgo = data[Math.floor(Math.random() * data.length)];
         res.json(hardAlgo);
-        console.log(`This one's hard: ${JSON.stringify(hardAlgo, null, 2)}`)
     }).catch(err => {
-        err ? res.status(500).send(err.message) : console.log(`This one's medium: ${JSON.stringify(medAlgo, null, 2)}`)
+        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
     })
 });
 
@@ -80,7 +78,7 @@ router.get("/api/medium", (req, res) => {
         const medAlgo = data[Math.floor(Math.random() * data.length)];
         res.json(medAlgo);
     }).catch(err => {
-        err ? res.status(500).send(err.message) : console.log(`This one's medium: ${JSON.stringify(medAlgo, null, 2)}`)
+        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
     })
 });
 
@@ -90,7 +88,7 @@ router.get("/api/easy", (req, res) => {
         const easyAlgo = data[Math.floor(Math.random() * data.length)];
         res.json(easyAlgo);
     }).catch(err => {
-        err ? res.status(500).send(err.message) : console.log(`This one's easy: ${JSON.stringify(easyAlgo, null, 2)}`)
+        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
     })
 });
 

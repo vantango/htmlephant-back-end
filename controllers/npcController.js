@@ -28,19 +28,18 @@ const seedData = [
 // Seed route for NPC characters
 router.get("/seednpc", (req, res) => {
     db.Npc.create(seedData).then(result => {
-        res.send("Success!")
+        res.send(`Congratulations! You have created: ${JSON.stringify(seedData, null, 2)}`)
     }).catch(err => {
-        err ? res.status(500).send(err.message) : console.log(`Here's your npcs: ${JSON.stringify(result, null, 2)}`);
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     });
 });
 
 // API route for NPC characters
 router.get("/api/npc", (req, res) => {
     db.Npc.find({}).then(data => {
-        console.log(`Here they all are fool: ${JSON.stringify(data, null, 2)}`);
         res.json(data);
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.send("Success!")
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     });
 });
 

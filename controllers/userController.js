@@ -8,11 +8,13 @@ const router = express.Router()
 
 // Signup Route
 router.post("/signup", (req, res) => {
-    createUser(req.body, data => {
-        req.session.user = { username: data.username, id: data._id };
+    db.User.create(req.body).then(data => {
+        console.log(`Here's your user info: ${JSON.stringify(data.null, 2)}`);
         res.json(data)
-    });
-
+    }).catch(err => {
+        res.status(500).send(err.message);
+        console.log(err)
+    })
 });
 
 // Login route
@@ -30,7 +32,6 @@ router.post("/login", (req, res) => {
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        console.log(err);
         res.status(500).send("Oh wow look, you broke it.")
     });
 });
@@ -50,19 +51,6 @@ router.get("/logout", (req, res) => {
     req.session.destroy();
     res.send("Goodbye.");
 });
-
-// Function to create user
-async function createUser(data, cb) {
-    db.User.create({
-        username: data.username,
-        password: bcrypt.hashSync(data.password, 10),
-        character: data.character,
-        level: 1
-    }).then(user => {
-        console.log(`This is user: ${JSON.stringify(user, null, 2)}`);
-        cb(user);
-    }).catch(err => console.log(err));
-}
 
 module.exports = router;
 

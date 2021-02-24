@@ -30,8 +30,7 @@ router.post("/login", (req, res) => {
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        console.log(err);
-        res.status(500).send("Oh wow look, you broke it.")
+        err ? res.status(500).send("Oh wow look, you broke it.") : console.log("Success!")
     });
 });
 
@@ -59,9 +58,10 @@ async function createUser(data, cb) {
         character: data.character,
         level: 1
     }).then(user => {
-        console.log(`This is user: ${JSON.stringify(user, null, 2)}`);
         cb(user);
-    }).catch(err => console.log(err));
+    }).catch(err => {
+        err ? res.status(500).send(err.message) : console.log(`This is user: ${JSON.stringify(user, null, 2)}`);
+    });
 }
 
 module.exports = router;

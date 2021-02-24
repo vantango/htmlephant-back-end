@@ -5,7 +5,7 @@ const db = require("./models");
 const session = require('express-session');
 
 // Set environment variables for port
-const PORT = process.env.port || 8080;
+const PORT = process.env.PORT || 8080;
 
 // Express server instance
 const app = express();

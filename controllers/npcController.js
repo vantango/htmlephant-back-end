@@ -28,9 +28,9 @@ const seedData = [
 // Seed route for NPC characters
 router.get("/seednpc", (req, res) => {
     db.Npc.create(seedData).then(result => {
-        console.log(`Here's your npcs: ${JSON.stringify(result, null, 2)}`);
+        res.send("Success!")
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.send("Success!")
+        err ? res.status(500).send(err.message) : console.log(`Here's your npcs: ${JSON.stringify(result, null, 2)}`);
     });
 });
 

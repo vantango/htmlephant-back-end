@@ -2,5 +2,5 @@
 module.exports = {
     Algo: require("./Algo"),
     Npc: require("./Npc"),
-    User: require("./user")
+    User: require("./User")
 };

@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const db = require("./models");
 const session = require('express-session');
+const cors = require("cors");
 
 // Set environment variables for port
 const PORT = process.env.port || 8080;
@@ -13,6 +14,7 @@ const app = express();
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
 
 // Connect to mongoose database
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {

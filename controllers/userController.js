@@ -84,6 +84,20 @@ router.get("/vip", (req, res) => {
 //     // res.send("Goodbye.");
 // });
 
+// Function to create user
+async function createUser(data, cb) {
+    db.User.create({
+        username: data.username,
+        password: bcrypt.hashSync(data.password, 10),
+        character: data.character,
+        level: 1
+    }).then(user => {
+        cb(user);
+    }).catch(err => {
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+    });
+}
+
 
 
 // Token authentication

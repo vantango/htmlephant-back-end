@@ -10,8 +10,7 @@ const router = express.Router()
 
 // Signup Route
 router.post("/signup", (req, res) => {
-    db.User.create({req.body}).then(data => {
-
+    createUser(req.body, data => {
         // Creating JWT token
         const token = jwt.sign({
             username: data.username,
@@ -23,9 +22,9 @@ router.post("/signup", (req, res) => {
             });
         res.json({ user: data, token })
     }).catch(err => {
-        res.status(500).send(err.message);
-        console.log(err)
-    })
+        err ? res.status(500).send("You are an idiot.") : res.status(200).send("Congrats fool!")
+    });
+
 });
 
 // Login route
@@ -57,7 +56,6 @@ router.post("/login", (req, res) => {
 // Render user profile after successful login
 router.get("/profile", (req, res) => {
     tokenData ? res.render("profile", { user: tokenData }) : res.status(401).send("IMPOSTER!")
-
 });
 
 
@@ -65,22 +63,25 @@ router.get("/profile", (req, res) => {
 router.get("/vip", (req, res) => {
 
     // Verifying JWT token
-    let tokenData = authenticateMe(req.body);
+    let tokenData = authenticateMe(req);
     tokenData ? res.send("You belong.") : res.status(401).send("You disgust me.")
 });
 
 
+// Function to create user
+async function createUser(data, cb) {
+    db.User.create({
+        username: data.username,
+        password: bcrypt.hashSync(data.password, 10),
+        character: data.character,
+        level: 1
+    }).then(user => {
+        cb(user);
+    }).catch(err => {
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+    });
+}
 
-// Logout route 
-// router.get("/logout", (req, res) => {
-
-//     // Destroys JWT token
-//     req.user.deleteToken(req.token, (err, data) => {
-//         err ? res.status(400).send("You're an awful human being") : res.status(200).send("Goodbye!")
-//     })
-//     // req.session.destroy();
-//     // res.send("Goodbye.");
-// });
 
 
 // Token authentication

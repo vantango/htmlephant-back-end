@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const db = require("./models");
+const jwt = require("jsonwebtoken");
 
 // Set environment variables for port
 const PORT = process.env.port || 8080;

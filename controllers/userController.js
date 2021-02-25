@@ -57,19 +57,9 @@ router.post("/login", (req, res) => {
 router.get("/vip", (req, res) => {
 
     // Verifying JWT token
-    let tokenData = authenticateMe(req.body);
+    let tokenData = authenticateMe(req);
     tokenData ? res.send("You belong.") : res.status(401).send("You disgust me.")
     // req.session.user ? res.send("You belong.") : res.status(401).send("You disgust me.")
-});
-
-// Logout route 
-router.get("/logout", (req, res) => {
-
-    // Destroys JWT token
-    req.user.deleteToken(req.token, (err, data) => {
-        err ? res.status(400).send("You're an awful human being") : res.status(200).send("Goodbye!")
-    })
-
 });
 
 // Function to create user
@@ -89,7 +79,6 @@ async function createUser(data, cb) {
 // Token authentication
 const authenticateMe = (req) => {
     let token = false;
-    console.log(req)
 
     if (!req.headers) {
         token = false

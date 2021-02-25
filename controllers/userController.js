@@ -12,12 +12,11 @@ const router = express.Router()
 // Signup Route
 router.post("/signup", (req, res) => {
     db.User.create(req.body).then(data => {
-        console.log(`Here's your user info: ${JSON.stringify(data.null, 2)}`);
 
         // Creating JWT token
         const token = jwt.sign({
             username: data.username,
-            id: data.id
+            id: data._id
         },
             config.secret,
             {
@@ -36,18 +35,14 @@ router.post("/login", (req, res) => {
         if (!data) {
             res.status(404).send("IMPOSTER!")
         } else if (bcrypt.compareSync(req.body.password, data.password)) {
-            // req.session.user = {
-            //     id: data._id,
-            //     username: data.username
-            // };
             const token = jwt.sign({
                 username: data.username,
-                id: data.id
-            }, config.secret,
+                id: data._id
+            },
+                config.secret,
                 {
                     expiresIn: "2h"
                 });
-            // res.json(req.session.user)
             res.json({
                 user: data, token
             })
@@ -72,7 +67,7 @@ router.get("/profile", (req, res) => {
 router.get("/vip", (req, res) => {
 
     // Verifying JWT token
-    let tokenData = authenticateMe(req);
+    let tokenData = authenticateMe(req.body);
     tokenData ? res.send("You belong.") : res.status(401).send("You disgust me.")
     // req.session.user ? res.send("You belong.") : res.status(401).send("You disgust me.")
 });
@@ -80,13 +75,15 @@ router.get("/vip", (req, res) => {
 
 
 // Logout route 
-router.get("/logout", (req, res) => {
+// router.get("/logout", (req, res) => {
 
-    // Destroys JWT token
-    jwt.destroy(tokenData)
-    // req.session.destroy();
-    res.send("Goodbye.");
-});
+//     // Destroys JWT token
+//     req.user.deleteToken(req.token, (err, data) => {
+//         err ? res.status(400).send("You're an awful human being") : res.status(200).send("Goodbye!")
+//     })
+//     // req.session.destroy();
+//     // res.send("Goodbye.");
+// });
 
 
 // Token authentication
@@ -113,24 +110,6 @@ const authenticateMe = (req) => {
         })
     }
     return data;
-}
-
-// Function to create user
-async function createUser(data, cb) {
-    db.User.create({
-        username: data.username,
-        password: bcrypt.hashSync(data.password, 10),
-        character: data.character,
-        level: 1
-    }).then(user => {
-        const token = jwt.sign({
-            username: user.username,
-            id: user.id
-        })
-        cb({ user, token });
-    }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
-    });
 }
 
 module.exports = router;

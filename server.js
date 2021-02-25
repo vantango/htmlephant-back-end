@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const db = require("./models");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 // Set environment variables for port
 const PORT = process.env.PORT || 8080;
@@ -10,9 +11,11 @@ const PORT = process.env.PORT || 8080;
 // Express server instance
 const app = express();
 
+
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 // Connect to mongoose database
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {

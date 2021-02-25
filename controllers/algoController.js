@@ -6,7 +6,7 @@ const db = require("../models");
 const router = express.Router()
 
 // NPC Seeds
-// Front-end will need to use JSON.parse(response.argsAndOutput) to access argsAndOutput as json objects
+// Front-end will need to use JSON.parse(response.argsAndOutput and response.hints) to access argsAndOutput and hints as json objects
 const seedAlgo = [
     {
         question: "Write code to print the first character in a given string that is not a duplicate.",
@@ -16,9 +16,9 @@ const seedAlgo = [
     },
     {
         question: "Write code to reverse a given string.",
-        hints: ["Taco", "Taco", "Taco"],
+        hints: '[{"question1":"How do you split a string into an array?", "wrong11": "Pet a cat", "wrong12": "find a pet manatee.", "correct1": "use the .split() method."}, {"question2": "Which method removes the last element in an array?", "wrong21": "The .shift() method", "correct2": "The pop() method.", "wrong22": "Walking into the ocean."}, {"question3": "What is the correct syntax for a for loop?", "correct3": "for(let i=0; i<=array.length; i++){<do something>}", "wrong31": "for(const i=0; i>array.length; i++){<do something>}", "wrong32": "while(nachos=notReady){<dosomething>}"}]',
         difficulty: "Easy",
-        argsAndOutput: '{"args": "car", "output": true}'
+        argsAndOutput: '{"args": "car", "output": "rac"}'
     },
     {
         question: "Write code to remove the duplicate characters from a given string.",
@@ -34,7 +34,7 @@ const seedAlgo = [
     },
 ]
 
-// Seed route for NPC characters
+// Seed route for algorithms
 router.get("/seedalgo", (req, res) => {
     db.Algo.create(seedAlgo).then(result => {
         res.send(`Congratulations! You have created: ${JSON.stringify(result, null, 2)}`)

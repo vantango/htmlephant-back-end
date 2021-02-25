@@ -10,8 +10,7 @@ const router = express.Router()
 
 // Signup Route
 router.post("/signup", (req, res) => {
-    db.User.create(req.body).then(data => {
-
+    createUser(req.body, data => {
         // Creating JWT token
         const token = jwt.sign({
             username: data.username,
@@ -23,9 +22,9 @@ router.post("/signup", (req, res) => {
             });
         res.json({ user: data, token })
     }).catch(err => {
-        res.status(500).send(err.message);
-        console.log(err)
-    })
+        err ? res.status(500).send("You are an idiot.") : res.status(200).send("Congrats fool!")
+    });
+
 });
 
 // Login route
@@ -74,15 +73,14 @@ router.get("/vip", (req, res) => {
 
 
 // Logout route 
-// router.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
 
-//     // Destroys JWT token
-//     req.user.deleteToken(req.token, (err, data) => {
-//         err ? res.status(400).send("You're an awful human being") : res.status(200).send("Goodbye!")
-//     })
-//     // req.session.destroy();
-//     // res.send("Goodbye.");
-// });
+    // Destroys JWT token
+    req.user.deleteToken(req.token, (err, data) => {
+        err ? res.status(400).send("You're an awful human being") : res.status(200).send("Goodbye!")
+    })
+    
+});
 
 // Function to create user
 async function createUser(data, cb) {

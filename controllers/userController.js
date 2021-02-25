@@ -85,6 +85,7 @@ router.get("/vip", (req, res) => {
 // });
 
 
+
 // Token authentication
 const authenticateMe = (req) => {
     let token = false;

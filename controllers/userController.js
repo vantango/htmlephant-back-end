@@ -3,7 +3,6 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
 const config = require("../config/auth.js")
 
 // Express router instance
@@ -11,7 +10,7 @@ const router = express.Router()
 
 // Signup Route
 router.post("/signup", (req, res) => {
-    db.User.create(req.body).then(data => {
+    db.User.create({req.body}).then(data => {
 
         // Creating JWT token
         const token = jwt.sign({
@@ -59,7 +58,6 @@ router.post("/login", (req, res) => {
 router.get("/profile", (req, res) => {
     tokenData ? res.render("profile", { user: tokenData }) : res.status(401).send("IMPOSTER!")
 
-    // req.session.user ? res.render("profile", { user: req.session.user }) : res.status(401).send("IMPOSTER!")
 });
 
 
@@ -69,7 +67,6 @@ router.get("/vip", (req, res) => {
     // Verifying JWT token
     let tokenData = authenticateMe(req.body);
     tokenData ? res.send("You belong.") : res.status(401).send("You disgust me.")
-    // req.session.user ? res.send("You belong.") : res.status(401).send("You disgust me.")
 });
 
 
@@ -110,6 +107,20 @@ const authenticateMe = (req) => {
         })
     }
     return data;
+}
+
+// Function to create user
+async function createUser(data, cb) {
+    db.User.create({
+        username: data.username,
+        password: bcrypt.hashSync(data.password, 10),
+        character: data.character,
+        level: 1
+    }).then(user => {
+        cb(user);
+    }).catch(err => {
+        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+    });
 }
 
 module.exports = router;

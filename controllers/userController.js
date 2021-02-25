@@ -3,7 +3,6 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
 const config = require("../config/auth.js")
 
 // Express router instance

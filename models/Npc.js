@@ -18,7 +18,5 @@ const NpcSchema = new Schema({
     }
 });
 
-
-
 const Npc = mongoose.model("Npc", NpcSchema)
 module.exports = Npc;

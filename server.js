@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const db = require("./models");
 const session = require('express-session');
+const jwt = require("jsonwebtoken");
+const cors = require("cors")
 
 // Set environment variables for port
 const PORT = process.env.port || 8080;
@@ -22,14 +24,17 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
 });
 
 // Sets up sessions for user login
-app.use(session({
-    secret: 'Oh, jeez.',
-    resave: false,
-    saveUninitialied: false,
-    cookies: {
-        maxAge: 1000 * 60 * 60 * 2
-    }
-}));
+// app.use(session({
+//     secret: 'Oh, jeez.',
+//     resave: false,
+//     saveUninitialied: false,
+//     cookies: {
+//         maxAge: 1000 * 60 * 60 * 2
+//     }
+// }));
+
+
+
 
 // Define routes
 const userRoutes = require("./controllers/userController");

@@ -22,7 +22,7 @@ router.post("/signup", (req, res) => {
             });
         res.json({ user: data, token })
     }).catch(err => {
-        err ? res.status(500).send("You are an idiot.") : res.status(200).send("Congrats fool!")
+        err ? res.status(500).send("Details of your incompetence do not interest me.") : res.status(200).send("Abandon all hope, ye who enter here.")
     });
 
 });
@@ -53,14 +53,6 @@ router.post("/login", (req, res) => {
 });
 
 
-// Render user profile after successful login
-router.get("/profile", (req, res) => {
-    tokenData ? res.render("profile", { user: tokenData }) : res.status(401).send("IMPOSTER!")
-
-    // req.session.user ? res.render("profile", { user: req.session.user }) : res.status(401).send("IMPOSTER!")
-});
-
-
 // Test user login route
 router.get("/vip", (req, res) => {
 
@@ -70,8 +62,6 @@ router.get("/vip", (req, res) => {
     // req.session.user ? res.send("You belong.") : res.status(401).send("You disgust me.")
 });
 
-
-
 // Logout route 
 router.get("/logout", (req, res) => {
 
@@ -79,7 +69,7 @@ router.get("/logout", (req, res) => {
     req.user.deleteToken(req.token, (err, data) => {
         err ? res.status(400).send("You're an awful human being") : res.status(200).send("Goodbye!")
     })
-    
+
 });
 
 // Function to create user
@@ -96,11 +86,10 @@ async function createUser(data, cb) {
     });
 }
 
-
-
 // Token authentication
 const authenticateMe = (req) => {
     let token = false;
+    console.log(req)
 
     if (!req.headers) {
         token = false

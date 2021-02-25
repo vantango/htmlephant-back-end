@@ -3,7 +3,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth.js")
+const config = require("../config/auth.js");
+const mongo = require("mongoose");
 
 // Express router instance
 const router = express.Router()
@@ -60,6 +61,19 @@ router.get("/vip", (req, res) => {
     let tokenData = authenticateMe(req);
     tokenData ? res.send("You belong.") : res.status(401).send("You disgust me.")
 });
+
+// Update route to increment user level after each key
+router.put("/levelup/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        $set: {
+            level: req.body.level,
+        }
+    }, (err, data) => {
+        err ? res.send(err) : res.json(data)
+    })
+})
 
 // Function to create user
 async function createUser(data, cb) {

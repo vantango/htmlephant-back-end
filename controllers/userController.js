@@ -67,8 +67,8 @@ router.put("/levelup/:id", (req, res) => {
     db.User.updateOne({
         _id: req.params.id
     }, {
-        $set: {
-            level: req.body.level,
+        $inc: {
+            level: 1
         }
     }, (err, data) => {
         err ? res.send(err) : res.json(data)

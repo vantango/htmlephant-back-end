@@ -5,8 +5,7 @@ const db = require("../models");
 // Express router instance
 const router = express.Router()
 
-// NPC Seeds
-// Front-end will need to use JSON.parse(response.argsAndOutput and response.hints) to access argsAndOutput and hints as json objects
+// Algo Seeds
 const seedAlgo = [
     {
         algorithm: "Write code to print the first character in a given string that is not a duplicate.",

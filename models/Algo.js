@@ -6,13 +6,45 @@ const Schema = mongoose.Schema;
 
 // Shape our Algorithm object
 const AlgoSchema = new Schema({
-    question: {
+    algorithm: {
         type: String,
         required: true,
         unique: true
     },
-    hints: {
+    question1: {
+        type: String,
+        required: true,
+    },
+    answers1: {
         type: [String],
+        required: true
+    },
+    correctAnswer1: {
+        type: String,
+        required: true
+    },
+    question2: {
+        type: String,
+        required: true,
+    },
+    answers2: {
+        type: [String],
+        required: true
+    },
+    correctAnswer2: {
+        type: String,
+        required: true
+    },
+    question3: {
+        type: String,
+        required: true,
+    },
+    answers3: {
+        type: [String],
+        required: true
+    },
+    correctAnswer3: {
+        type: String,
         required: true
     },
     difficulty: {

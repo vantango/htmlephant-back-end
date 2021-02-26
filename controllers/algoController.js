@@ -68,7 +68,7 @@ const seedAlgo = [
 
 // Seed route for algorithms
 router.get("/seedalgo", (req, res) => {
-    db.Algo.create(seedAlgo).then(result => {
+    db.Algo.insertMany(seedAlgo).then(result => {
         res.send(`Congratulations! You have created: ${JSON.stringify(result, null, 2)}`)
     }).catch(err => {
         err ? res.status(500).send(err.message) : res.status(200).send("Success!")

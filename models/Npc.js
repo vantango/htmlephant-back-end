@@ -12,14 +12,12 @@ const NpcSchema = new Schema({
         default: "Manatee Joe"
     },
     flavorDialogue: {
-        type: [String],
+        type: [[String]],
         required: true,
-        default: ["Oh, Jeez", "For the love of god!", "Sam's Canned Ham Yams."]
     },
     usefulDialogue: {
-        type: [String],
+        type: [[String]],
         required: true,
-        default: ["Oh, Jeez", "For the love of god!", "Sam's Canned Ham Yams."]
     }
 });
 

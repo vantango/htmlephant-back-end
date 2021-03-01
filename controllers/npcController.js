@@ -30,44 +30,10 @@ const seedData = [
     }
 ]
 
-// Some fake NPCs to throw them off the scent
-const fakeData = [
-    {
-        name: "Luther",
-        flavorDialogue: ["Like sands through the hourglass, my hopes for your success dwindle by the second.", "As Sun Tzu said in his 'Art of War,'...*sigh* Never mind. ", "The details of your incompetence do not interest me."],
-        usefulDialogue: ["Welcome! You are entering a world of magic---well, magic that is made up of data, computer science and algorithms. I swear, it's a lot cooler than it sounds. I am Luther, the Dev Wizard, and this is Castle Full Stack. One day, perhaps you will possess all the knowledge held in these walls, but for now, let's focus on one thing: algorithms. Seek out my Assistants in the castle, and they will share their coding knowledge with you. Each will ask you a series of questions. Once you complete all the questions, you will get a key. Once you have three keys, come back to see me to test what you've learned. Good luck!", "You have not obtained sufficient knowledge. Get out of my sight.", "I had my doubts, but you have earned the right to 'Enscribe' your code upon the tablet below. But be warned! If you do not follow my directions, your answer will be wrong and you shall be doomed forevermore to wander the Valley of Lost Closing Parentheses. Now gaze upon the tablet, and follow my rules three: Do not wrap your function in curly brackets, do not write 'function', and whatever you do, DO NOT type '=>'. If you do, it will break, and there is nothing I can do to protect you. If your challenge is 'Write code to add numbers a and b together', your answer should be 'return a+b'.", "Despite your idiocy, you have conquired all my challenges. You live to walk another day, and for the love of god, don't waste it.", "I knew you were unworthy of the Wisdom of Castle Full Stack! Begone! Away to the Valley of Lost Closing Parentheses with you!"]
-    },
-    {
-        name: "Eli",
-        flavorDialogue: ["We don't get too many of your kind around these parts.", "Did I ever tell you I was struck by lightning seven times?", "Oh, hey, it's you! Didn't think I'd be seeing you again. Most that go in there don't come out again."],
-        usefulDialogue: ["Howdy there, my friend! Nice to see you again! I got a question for ya.", "Hey, nice work! Here's your key. It's been real nice talking to you! Good luck out there!", "You're not gonna make it through the night in this here castle with answers like THAT."]
-    },
-    {
-        name: "The Great Agatha",
-        flavorDialogue: ["Come closer, young one. I do not harm those who have not yet displeased me.", "Fool! Your arrogance will ensure you rot along with all those who came before you!", "*horrible screaming*"],
-        usefulDialogue: ["Good evening. Do not look upon me, for your fate rests only in your own hands. Before you lies a challenge. Answer it correctly, and you shall obtain a key. Answer it incorrectly, and the consequences are too dire to speak of.", "You have prevailed! As promised, your key. Tread carefully and you may see the light of day again.", "FOOL! Away with you, and I hope you enjoy the screams of all those who have failed before you!"]
-    },
-    {
-        name: "Denise",
-        flavorDialogue: ["...", "*appears silently*", "SHHH. It's almost time."],
-        usefulDialogue: ["It's time. Do you know the answer?", "You have guessed correctly. You may express your joy through tears.", "Incorrect. Bow to me as I exit."]
-    }
-]
-
-
-// Seed route for NPC real characters
+// Seed route for NPC characters
 router.get("/seednpc", (req, res) => {
     db.Npc.create(seedData).then(result => {
         res.send(`Congratulations! You have created: ${JSON.stringify(seedData, null, 2)}`)
-    }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
-    });
-});
-
-// Seed route for fake NPC characters
-router.get("/faker", (req, res) => {
-    db.Npc.create(fakeData).then(result => {
-        res.send(`Congratulations! You have created: ${JSON.stringify(fakeData, null, 2)}`)
     }).catch(err => {
         err ? res.status(500).send(err.message) : res.status(200).send("Success!")
     });

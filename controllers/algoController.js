@@ -36,18 +36,18 @@ const seedAlgo = [
         argsAndOutput: '{"args": "car", "output": "rac"}'
     },
     {
-        algorithm: "Write code to remove the duplicate characters from a given string.",
-        question1: "What is the best animal?",
-        answers1: ["Cat", "Cat", "Cat"],
-        correctAnswer1: "Cat",
-        question2: "What is the best animal?",
-        answers2: ["Cat", "Cat", "Cat"],
-        correctAnswer2: "Cat",
-        question3: "What is the best animal?",
-        answers3: ["Cat", "Cat", "Cat"],
-        correctAnswer3: "Cat",
+        algorithm: "Write code to remove the non-duplicate characters from a given string.",
+        question1: "What does the .filter() method do?",
+        answers1: ["Removes characters from a given array.", "Creates a new array with only the characters from the original array which meet a given condition.", "Makes a damn good cup of coffee."],
+        correctAnswer1: "Creates a new array with only the characters from the original array which meet a given condition.",
+        question2: "Is there a difference between == and === in Javascript?",
+        answers2: ["Yes; == compares two values but ignores the data types of those values. === returns true only if both the values and data types are the same.", "Yes; one is shorter.", "Nah man, they're the same."],
+        correctAnswer2: "Yes; == compares two values but ignores the data types of those values. === returns true only if both the values and data types are the same.",
+        question3: "What does indexOf() take in, and what does it return?",
+        answers3: ["My hat, if it knows what's good for it.", "It takes in a number and returns a string.", "It takes in string and returns a number."],
+        correctAnswer3: "It takes in string and returns a number.",
         difficulty: "Hard",
-        argsAndOutput: '{"args": ["tacocat", "taco", "cat"], "output": false}'
+        argsAndOutput: '{"args": "tacocat", "output": "taccat"}'
     },
     {
         algorithm: "Write code to remove the letter e from a given string.",

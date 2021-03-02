@@ -56,20 +56,19 @@ router.post("/login", (req, res) => {
 
 // Protected route, only accessible to authenticated users
 router.get("/vip", (req, res) => {
-    console.log(req.body)
     // Verifying JWT token
     let tokenData = authenticateMe(req);
-    tokenData ? res.json(req.body) : res.status(401).send("You disgust me.")
+    console.log(`Here's what we get from the token: ${JSON.stringify(tokenData)}`)
+    if (tokenData) {
+        db.User.findOne({
+            _id: tokenData.id
+        }).then(data => {
+            res.json(data)
+        }).catch(err => {
+            err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+        })
+    }
 });
-
-// Route to grab one user
-router.get("/getone/:username", (req, res) => {
-    db.User.findOne({username: req.params.username}).then(data => {
-        res.json(data);
-    }).catch(err => {
-        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
-    })
-})
 
 // Update route to increment user level after each key
 router.put("/levelup/:id", (req, res) => {

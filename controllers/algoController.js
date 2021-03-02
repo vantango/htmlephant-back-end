@@ -49,20 +49,6 @@ const seedAlgo = [
         difficulty: "Hard",
         argsAndOutput: '{"args": "tacocat", "output": "taccat"}'
     },
-    {
-        algorithm: "Write code that examines two arrays then creates a new array based on the values that appear only once in either original array.",
-        question1: "Most of the time, comparison is the thief of joy, but when coding, you may be asked to compare the values of two different arrays in order to bring joy to recruiters. This would be a lot easier if we wrote a function that expected the values of two arrays. What would that look like?",
-        answers1: ["const diffArray()=[a,b,c]+[x,y,z]", "function diffArray([a,b,c],[x,y,z]){}", "var diffArray=function(array1, array2)"],
-        correctAnswer1: "function diffArray([a,b,c],[x,y,z]){}",
-        question2: "Whoa, that is an intense look. You must be looking at two arrays and thinking about how you can compare them and return only the unique values as a new array. Yeah, I'd know that look anywhere. Don't think too hard because you could use a nice ol' 'for loop' to solve this problem. If you created a new variable equal to an empty array, you could compare array1 and array2 to each other, then use the push method to put your results in the new, empty array. Check this example: for (let index = 0; index < array2.length; index++) { if (array1.indexOf(array2[index]) < 0) {newArray.push(array2[index]); This pushes the values specific to array2 to a new array after checking them against the values of array1. How would you write the expression that pushes the values of array1 after checking them against array 2?",
-        answers2: ["if(array2===array1){return newArray.push(array1)}", "for (array2.indexOf(array1){newArray.push(indexOf.array1)", "if (arr2.indexOf(arr1[index]) < 0) { newArr.push(arr1[index])"],
-        correctAnswer2: "if (arr2.indexOf(arr1[index]) < 0) { newArr.push(arr1[index])",
-        question3: "You're using a 'for loop' to check array values? How quaint. There are different ways to solve the same algorithm, and the best solutions use the best tools for the job. There is an awesome method called 'filter' that makes comparing arrays a breeze. The filter method takes in an array, checks the values within, and returns a specified value, like so: newArray = oldArray.filter((item) =>{ return item > 4 }). This filter is looking for values in the array called (items) that are greater than 4. Given this problem: var array =[8,2,9,3, 5], how would you write a filter function that only looks for values less than 6?",
-        answers3: ["var newArray = array.filter((item) => { return (item + 6)", "var newArray = array.filter((item) => {return (item <6)", "var newArray = array.filter((<6) => { return (item)"],
-        correctAnswer3: "var newArray = array.filter((item) => {return (item <6)",
-        difficulty: "Medium",
-        argsAndOutput: '{"args": ["pizza", "cat", "puppy", "calculator"], ["pizza", "manatee", "calculator", "puppy"], "output": ["cat", "manatee"]}'
-    },
 ]
 
 // Seed route for algorithms
@@ -107,7 +93,8 @@ router.get("/api/hard", (req, res) => {
 router.get("/api/medium", (req, res) => {
     db.Algo.find({ difficulty: "Medium" }).then(data => {
         const medAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(medAlgo);
+        res.json(medAlgo.argsAndOutput);
+        console.log(JSON.parse(medAlgo.argsAndOutput))
     }).catch(err => {
         err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
     })

@@ -45,3 +45,12 @@ app.listen(PORT, () => {
     console.log('App listening on PORT ' + PORT);
 });
 
+
+const removeNonDuplicate = str => {
+   const strArray = str.split("");
+   const duplicateArray = strArray.filter(el => {
+      return strArray.indexOf(el) !== strArray.lastIndexOf(el);
+   });
+   return duplicateArray.join("");
+};
+console.log(removeNonDuplicate("tacocat"));

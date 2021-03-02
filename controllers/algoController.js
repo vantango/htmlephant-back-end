@@ -13,8 +13,8 @@ const seedAlgo = [
         answers1: ["for (let i = 0; i<string.length; i++", "i=map(string.length)", "(console.log(string.indexOf('o')"],
         correctAnswer1: "for (let i = 0; i<string.length; i++",
         question2: "So you need a 'for loop' to return the first non-repeating character in a string, huh? I used to bullseye womp rats with a 'for loop' in my T-16. Good times! Anyway, a good method to use is IndexOf(). 'IndexOf' returns the first index at which a given element can be found in an array, or -1 if it's not in the array. Given the array: const food =['taco', 'burger', 'pizza', 'spaghetti'], the output of: console.log(food.indexOf('pizza') would be 2, because 'pizza' is the third item in the array. *Remember Array indices start at zero (0)*. Given the same 'food' array, at what index would 'burritos' be returned?",
-        answers2: [0, 5, -1],
-        correctAnswer2: -1,
+        answers2: ["0", "5", "-1"],
+        correctAnswer2: "-1",
         question3: "Are these qustions making you feel 'loopy'? Don't give up! You've got two pieces of the puzzle, let's bring in a third and round out this triangle. To get the first non-repeating letter of the string, we know we can write a function that uses the 'for loop' and 'indexOf' methods. We can then apply conditional logic to see if the indexOf the character in the string is present. For example, how could you write a function that checks if the first letter in the string 'tacocat' is 't'?",
         answers3: ["if (string.indexOf(t)== 0{ return true}", "if (string.indexOf(1) == t){ return true}", "if(string.indexOf(i)==0){return true}"],
         correctAnswer3: "if (string.indexOf(t)== 0{ return true}",
@@ -59,9 +59,9 @@ const seedAlgo = [
         correctAnswer2: "if (arr2.indexOf(arr1[j]) < 0) { newArr.push(arr1[j])",
         question3: "You're using a 'for loop' to check array values? How quaint. There different ways to solve the same algorithm, and the best solutions use the best tools for the job. There is an awesome method called 'filter' that makes comparing arrays a breeze. The filter method takes in an array, checks the values within, and returns a specified value, like so: newArray = oldArray.filter((item) =>{ return item > 4 }). This filter is looking for values in the array called (items) that are greater than 4. Given this problem: var array =[8,2,9,3, 5], how would you write a filter function that ony looks for values less than 6?",
         answers3: ["var newArray = array.filter((item) => { return (item + 6)", "var newArray = array.filter((item) => {return (item <6)", "var newArray = array.filter((<6) => { return (item)"],
-        correctAnswer3: "Jeez",
+        correctAnswer3: "var newArray = array.filter((item) => {return (item <6)",
         difficulty: "Medium",
-        argsAndOutput: '{"args": ['pizza','cat','puppy','calculator'],['pizza','manatee','calculator'], "output": ['cat','manatee']}'
+        argsAndOutput: '{"args": ["pizza", "cat", "puppy", "calculator"], ["pizza", "manatee", "calculator"], "output": ["cat", "manatee"]}'
     },
 ]
 

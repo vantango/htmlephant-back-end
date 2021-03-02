@@ -83,6 +83,19 @@ router.put("/levelup/:id", (req, res) => {
     })
 })
 
+// Update route to rest user level to 1
+router.put("/reset/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        level: 1
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+    })
+})
+
 // Function to create user
 async function createUser(data, cb) {
     db.User.create({

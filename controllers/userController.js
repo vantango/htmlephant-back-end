@@ -70,6 +70,17 @@ router.get("/vip", (req, res) => {
     }
 });
 
+// Route to get one user by id
+router.get("/api/user/:id", (req, res) => {
+    db.User.findOne({
+        _id: req.params.id
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+    })
+})
+
 // Update route to increment user level after each key
 router.put("/levelup/:id", (req, res) => {
     db.User.updateOne({

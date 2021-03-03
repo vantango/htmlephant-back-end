@@ -58,7 +58,6 @@ router.post("/login", (req, res) => {
 router.get("/vip", (req, res) => {
     // Verifying JWT token
     let tokenData = authenticateMe(req);
-    console.log(`Here's what we get from the token: ${JSON.stringify(tokenData)}`)
     if (tokenData) {
         db.User.findOne({
             _id: tokenData.id
@@ -70,6 +69,17 @@ router.get("/vip", (req, res) => {
     }
 });
 
+// Route to get one user by id
+router.get("/api/user/:id", (req, res) => {
+    db.User.findOne({
+        _id: req.params.id
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+    })
+})
+
 // Update route to increment user level after each key
 router.put("/levelup/:id", (req, res) => {
     db.User.updateOne({
@@ -80,6 +90,45 @@ router.put("/levelup/:id", (req, res) => {
         }
     }, (err, data) => {
         err ? res.send(err) : res.json(data)
+    })
+})
+
+// Update route to reset user level to 1
+router.put("/reset/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        level: 1
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+    })
+})
+
+// Update route to switch user from manatee to cat
+router.put("/switchtocat/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        character: "Cat"
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Switched to cat!")
+    })
+})
+
+// Update route to switch user from cat to manatee
+router.put("/switchtomanatee/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        character: "Manatee"
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Switched to manatee!")
     })
 })
 

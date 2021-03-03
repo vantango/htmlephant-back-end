@@ -93,8 +93,7 @@ router.get("/api/hard", (req, res) => {
 router.get("/api/medium", (req, res) => {
     db.Algo.find({ difficulty: "Medium" }).then(data => {
         const medAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(medAlgo.argsAndOutput);
-        console.log(JSON.parse(medAlgo.argsAndOutput))
+        res.json(medAlgo);
     }).catch(err => {
         err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
     })

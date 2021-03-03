@@ -107,27 +107,29 @@ router.put("/reset/:id", (req, res) => {
 })
 
 // Update route to switch user from manatee to cat
-router.put("/switchtocat/:id", (req, res) => {
+router.put("/switchtocat/:username", (req, res) => {
     db.User.updateOne({
-        _id: req.params.id
+        username: req.params.username
     }, {
         character: "Cat"
     }).then(data => {
         res.json(data)
     }).catch(err => {
+        console.log(`Error switching to cat:`, err);
         err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Switched to cat!")
     })
 })
 
 // Update route to switch user from cat to manatee
-router.put("/switchtomanatee/:id", (req, res) => {
+router.put("/switchtomanatee/:username", (req, res) => {
     db.User.updateOne({
-        _id: req.params.id
+        username: req.params.username
     }, {
         character: "Manatee"
     }).then(data => {
         res.json(data)
     }).catch(err => {
+        console.log(`Error switching to manatee:`, err);
         err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Switched to manatee!")
     })
 })

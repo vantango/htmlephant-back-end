@@ -15,7 +15,9 @@ const app = express();
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin:["https://wizards-and-whiteboards.herokuapp.com/"]
+}));
 
 // Connect to mongoose database
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {

@@ -15,7 +15,9 @@ const app = express();
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin:["http://localhost:3000"]
+}));
 
 // Connect to mongoose database
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {

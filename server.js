@@ -16,7 +16,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
-    origin:["https://wizards-and-whiteboards.herokuapp.com/"]
+    origin: ["https://wizards-and-whiteboards.herokuapp.com"]
 }));
 
 // Connect to mongoose database

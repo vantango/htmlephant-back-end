@@ -11,8 +11,13 @@ const router = express.Router()
 
 // Signup Route
 router.post("/signup", (req, res) => {
-    createUser(req.body, data => {
-        // Creating JWT token
+
+    db.User.create({
+        username: req.body.username,
+        password: bcrypt.hashSync(req.body.password, 10),
+        character: req.body.character,
+        level: 1
+    }).then(data => {
         const token = jwt.sign({
             username: data.username,
             id: data._id
@@ -134,19 +139,6 @@ router.put("/switchtomanatee/:username", (req, res) => {
     })
 })
 
-// Function to create user
-async function createUser(data, cb) {
-    db.User.create({
-        username: data.username,
-        password: bcrypt.hashSync(data.password, 10),
-        character: data.character,
-        level: 1
-    }).then(user => {
-        cb(user);
-    }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
-    });
-}
 
 // Token authentication
 const authenticateMe = (req) => {

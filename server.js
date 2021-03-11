@@ -20,10 +20,10 @@ app.use(express.json());
 // const whitelist = ["https://wizards-and-whiteboards.herokuapp.com", "http://localhost:3000"]
 
 const corsOptions = {
-    origin: "*",
-    credentials: true,
-    optionSuccessStatus: 200,
-    methods: "GET, POST, PUT"
+    "origin": "*",
+    "credentials": true,
+    "optionSuccessStatus": 200,
+    "methods": "GET, HEAD, POST, PUT"
 }
 
 app.use(cors(corsOptions));

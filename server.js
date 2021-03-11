@@ -15,9 +15,17 @@ const app = express();
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({
-    origin: ["https://wizards-and-whiteboards.herokuapp.com", "http://localhost:3000"]
-}));
+
+const whitelist = ["https://wizards-and-whiteboards.herokuapp.com", "http://localhost:3000"]
+
+const corsOptions = {
+    origin: (origin, cb) => {
+        whitelist.indexOf(origin) !== -1 ? cb(null, true) : cb(new Error ("Not allowed by CORS"))
+    },
+    credentials: true,
+    optionSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 // Connect to mongoose database
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {

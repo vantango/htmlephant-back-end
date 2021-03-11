@@ -23,7 +23,7 @@ router.post("/signup", (req, res) => {
             });
         res.json({ user: data, token })
     }).catch(err => {
-        err ? res.status(500).send("Details of your incompetence do not interest me.") : res.status(200).send("Abandon all hope, ye who enter here.")
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Abandon all hope, ye who enter here.")
     });
 
 });
@@ -49,12 +49,12 @@ router.post("/login", (req, res) => {
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        err ? res.status(500).send("Oh wow look, you broke it.") : res.status(200).send("Success!")
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
     });
 });
 
 
-// Protected route, only accessible to authenticated users
+// Route to authenticate users
 router.get("/vip", (req, res) => {
     // Verifying JWT token
     let tokenData = authenticateMe(req);
@@ -174,19 +174,6 @@ const authenticateMe = (req) => {
     return data;
 }
 
-// Function to create user
-async function createUser(data, cb) {
-    db.User.create({
-        username: data.username,
-        password: bcrypt.hashSync(data.password, 10),
-        character: data.character,
-        level: 1
-    }).then(user => {
-        cb(user);
-    }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
-    });
-}
 
 module.exports = router;
 

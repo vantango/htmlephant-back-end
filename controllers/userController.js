@@ -11,7 +11,6 @@ const router = express.Router()
 
 // Signup Route
 router.post("/signup", (req, res) => {
-
     db.User.create({
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10),
@@ -28,7 +27,7 @@ router.post("/signup", (req, res) => {
             });
         res.json({ user: data, token })
     }).catch(err => {
-        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Abandon all hope, ye who enter here.")
+        err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.status(200).send("Abandon all hope, ye who enter here.")
     });
 
 });

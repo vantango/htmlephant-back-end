@@ -16,15 +16,16 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const whitelist = ["https://wizards-and-whiteboards.herokuapp.com", "http://localhost:3000"]
+// Configure Cors
+// const whitelist = ["https://wizards-and-whiteboards.herokuapp.com", "http://localhost:3000"]
 
 const corsOptions = {
-    origin: (origin, cb) => {
-        whitelist.indexOf(origin) !== -1 ? cb(null, true) : cb(new Error ("Not allowed by CORS"))
-    },
+    origin: "*",
     credentials: true,
-    optionSuccessStatus: 200
+    optionSuccessStatus: 200,
+    methods: "GET, POST, PUT"
 }
+
 app.use(cors(corsOptions));
 
 // Connect to mongoose database

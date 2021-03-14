@@ -104,15 +104,14 @@ router.put("/leveldown/:id", (req, res) => {
         _id: req.params.id
     }, {
         $inc: {
-            level: -1,
-            health: -10
+            level: -1
         }
     }, (err, data) => {
         err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.json(data)
     })
 })
 
-// Update route to decrement user health by 5 
+// Update route to decrement user health by 5
 router.put("/healthdown/:id", (req, res) => {
     db.User.updateOne({
         _id: req.params.id

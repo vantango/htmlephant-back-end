@@ -91,7 +91,9 @@ router.put("/levelup/:id", (req, res) => {
     }, {
         $inc: {
             level: 1,
-            health: 10
+        }, 
+        $set: {
+            health: 3
         }
     }, (err, data) => {
         err ? res.send(err) : res.json(data)
@@ -117,7 +119,7 @@ router.put("/healthdown/:id", (req, res) => {
         _id: req.params.id
     }, {
         $inc: {
-            health: -5
+            health: -1
         }
     }, (err, data) => {
         err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.json(data)

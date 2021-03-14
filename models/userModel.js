@@ -31,7 +31,7 @@ const UserSchema = new Schema({
     health: {
         type: Number,
         required: true,
-        default: 10
+        default: 3
     }
 
 });

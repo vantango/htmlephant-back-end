@@ -27,6 +27,11 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
         default: 1
+    },
+    health: {
+        type: Number,
+        required: true,
+        default: 10
     }
 
 });

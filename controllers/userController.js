@@ -84,18 +84,46 @@ router.get("/api/user/:id", (req, res) => {
     })
 })
 
-// Update route to increment user level after each key
+// Update route to increment user level after each algorithm
 router.put("/levelup/:id", (req, res) => {
     db.User.updateOne({
         _id: req.params.id
     }, {
         $inc: {
-            level: 1
+            level: 1,
+            health: 10
         }
     }, (err, data) => {
         err ? res.send(err) : res.json(data)
     })
 })
+
+// Update route to decrement user level 
+router.put("/leveldown/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        $inc: {
+            level: -1
+        }
+    }, (err, data) => {
+        err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.json(data)
+    })
+})
+
+// Update route to decrement user health by 5
+router.put("/healthdown/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        $inc: {
+            health: -5
+        }
+    }, (err, data) => {
+        err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.json(data)
+    })
+})
+
 
 // Update route to reset user level to 1
 router.put("/reset/:id", (req, res) => {

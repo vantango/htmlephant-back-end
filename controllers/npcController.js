@@ -26,25 +26,25 @@ const seedData = [
     {
         name: "Denis",
         flavorDialogue: [["You can't judge a book by its cover. For example, this book looks innocent enough...but it's actually my new book, 102 Manatee Jokes. Don't tell Joe.", "*appears silently*", "You know, it is what it is."], ["I know who's going to win the man bun contest. I'm not saying, though.", "I don't wanna hear any more about the ham yams!", "..."], ["You've gotta crack a few eggs to make an omelete, that's what I always say.", "What's this cat doing in my burger?", "Wanna know another secret? Zac doesn't have a dog."], ["I've been around the world a few times, and I know the real worst font. Is it Papyrus? Who's to say.", "Cats? Tacos? Six to one, half a dozen to another in my book.", "Hey, guess what? Aslan doesn't like cats."]],
-        usefulDialogue: [["I've got a question for you. You might get a salmon out of it, if you play your cards right.", "Great work! Here's your salmon. Don't believe everything you hear about my mac and cheese.", "That's not how this works. My mac and cheese is cold now.", "That was my only salmon. There's no such thing as a free lunch, man."], ["We didn't scare you away the first time? Well, maybe this question will do the trick.", "That's right! Nice work. You might get out of here in one piece after all.", "Nope, wrong. Cutting corners won't help you here.", "If you want another salmon, you're all out of luck. Go see Aslan, but don't mention his man bun."], ["Back again? You're tougher than we thought. Here's a harder one for you.", "Wow, good work! Here's my last salmon, for real this time.","Nope, wrong. Guess I'm feeding my salmon to Zac's dog after all.", "No more salmon! Looks like you're up the creek without a paddle."]]
+        usefulDialogue: [["I've got a question for you. You might get a salmon out of it, if you play your cards right.", "Great work! Here's your salmon. Don't believe everything you hear about my mac and cheese.", "That's not how this works. My mac and cheese is cold now.", "That was my only salmon. There's no such thing as a free lunch, man."], ["We didn't scare you away the first time? Well, maybe this question will do the trick.", "That's right! Nice work. You might get out of here in one piece after all.", "Nope, wrong. Cutting corners won't help you here.", "If you want another salmon, you're all out of luck. Go see Aslan, but don't mention his man bun."], ["Back again? You're tougher than we thought. Here's a harder one for you.", "Wow, good work! Here's my last salmon, for real this time.", "Nope, wrong. Guess I'm feeding my salmon to Zac's dog after all.", "No more salmon! Looks like you're up the creek without a paddle."]]
     }
 ]
 
-// Seed route for NPC characters
+// Seed NPCs
 router.get("/seednpc", (req, res) => {
-    db.Npc.create(seedData).then(result => {
-        res.send(`Congratulations! You have created: ${JSON.stringify(seedData, null, 2)}`)
+    db.Npc.create(seedData).then(data => {
+        data ? res.status(200).send(`Congratulations! You have created: ${JSON.stringify(data, null, 2)}`) : res.status(404).send("You have FAILED!")
     }).catch(err => {
-        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     });
 });
 
 // API route for NPC characters
 router.get("/api/npc", (req, res) => {
     db.Npc.find({}).then(data => {
-        res.json(data);
+        data ? res.json(data) : res.status(404).send("You have FAILED!")
     }).catch(err => {
-        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     });
 });
 

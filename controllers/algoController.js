@@ -93,7 +93,7 @@ router.get("/api/hard", (req, res) => {
             res.status(404).send("FOOL! You have lost the algorithms!")
         }
     }).catch(err => {
-        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 
@@ -107,17 +107,21 @@ router.get("/api/medium", (req, res) => {
             res.status(404).send("FOOL! You have lost the algorithms!")
         }
     }).catch(err => {
-        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Here ya go!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 
 // API route for one easy algorithm
 router.get("/api/easy", (req, res) => {
     db.Algo.find({ difficulty: "Easy" }).then(data => {
-        const easyAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(easyAlgo);
+        if (data) {
+            const easyAlgo = data[Math.floor(Math.random() * data.length)];
+            res.json(easyAlgo);
+        } else {
+            res.status(404).send("FOOL! You have lost the algorithms!")
+        }
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 

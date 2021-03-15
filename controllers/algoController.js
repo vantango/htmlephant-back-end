@@ -5,7 +5,7 @@ const db = require("../models");
 // Express router instance
 const router = express.Router()
 
-// Algo Seeds
+// Algorithm Seeds
 const seedAlgo = [
     {
         algorithm: "Write code to print the first character in a given string that is not a duplicate.",
@@ -51,61 +51,77 @@ const seedAlgo = [
     },
 ]
 
-// Seed route for algorithms
+// Seed algorithms
 router.get("/seedalgo", (req, res) => {
-    db.Algo.insertMany(seedAlgo).then(result => {
-        res.send(`Congratulations! You have created: ${JSON.stringify(result, null, 2)}`)
+    db.Algo.insertMany(seedAlgo).then(data => {
+        data ? res.status(200).send(`Congratulations! You have created: ${JSON.stringify(data, null, 2)}`) : res.status(404).send("You have FAILED!")
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     });
 });
 
 // API route for all algorithms
 router.get("/api/algo", (req, res) => {
     db.Algo.find({}).then(data => {
-        res.json(data);
+        data ? res.json(data) : res.status(404).send("FOOL! You have lost the algorithms!")
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     });
 });
 
 // API route for one random algorithm
 router.get("/api/random", (req, res) => {
     db.Algo.find({}).then(data => {
-        const randomAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(randomAlgo);
+        if (data) {
+            const randomAlgo = data[Math.floor(Math.random() * data.length)];
+            res.json(randomAlgo);
+        } else {
+            res.status(404).send("FOOL! You have lost the algorithms!")
+        }
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Success!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 
 // API route for one random hard algorithm
 router.get("/api/hard", (req, res) => {
     db.Algo.find({ difficulty: "Hard" }).then(data => {
-        const hardAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(hardAlgo);
+        if (data) {
+            const hardAlgo = data[Math.floor(Math.random() * data.length)];
+            res.json(hardAlgo);
+        } else {
+            res.status(404).send("FOOL! You have lost the algorithms!")
+        }
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 
 // API route for one medium algorithm
 router.get("/api/medium", (req, res) => {
     db.Algo.find({ difficulty: "Medium" }).then(data => {
-        const medAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(medAlgo);
+        if (data) {
+            const medAlgo = data[Math.floor(Math.random() * data.length)];
+            res.json(medAlgo);
+        } else {
+            res.status(404).send("FOOL! You have lost the algorithms!")
+        }
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 
 // API route for one easy algorithm
 router.get("/api/easy", (req, res) => {
     db.Algo.find({ difficulty: "Easy" }).then(data => {
-        const easyAlgo = data[Math.floor(Math.random() * data.length)];
-        res.json(easyAlgo);
+        if (data) {
+            const easyAlgo = data[Math.floor(Math.random() * data.length)];
+            res.json(easyAlgo);
+        } else {
+            res.status(404).send("FOOL! You have lost the algorithms!")
+        }
     }).catch(err => {
-        err ? res.status(500).send(err.message) : res.status(200).send("Here ya go!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     })
 });
 

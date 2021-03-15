@@ -1,11 +1,10 @@
 // Dependencies
-const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 // Schema instance
 const Schema = mongoose.Schema;
 
-// Shape our User object
+//User object
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -31,11 +30,14 @@ const UserSchema = new Schema({
     health: {
         type: Number,
         required: true,
-        default: 3
+        default: 3,
+        min: 0,
+        max: 3
     }
 
 });
 
+// Export
 const User = mongoose.model("User", UserSchema)
 module.exports = User;
 

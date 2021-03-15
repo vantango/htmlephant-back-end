@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.js");
-const mongo = require("mongoose");
+
 
 // Express router instance
 const router = express.Router()
@@ -17,27 +17,34 @@ router.post("/signup", (req, res) => {
         character: req.body.character,
         level: 1
     }).then(data => {
-        const token = jwt.sign({
-            username: data.username,
-            id: data._id
-        },
-            config.secret,
-            {
-                expiresIn: "2h"
-            });
-        res.json({ user: data, token })
+        if (data) {
+            // If user is created, assign token and send back user data
+            const token = jwt.sign({
+                username: data.username,
+                id: data._id
+            },
+                config.secret,
+                {
+                    expiresIn: "2h"
+                });
+            res.json({ user: data, token })
+        } else {
+            // If not, respond with 404 status code
+            res.status(404).send("You have no power here!")
+        }
     }).catch(err => {
-        err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.status(200).send("Abandon all hope, ye who enter here.")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Abandon all hope, ye who enter here.")
     });
-
 });
 
 // Login route
 router.post("/login", (req, res) => {
     db.User.findOne({ username: req.body.username }).then(data => {
         if (!data) {
+            // If no user is found, respond with 404 status code
             res.status(404).send("IMPOSTER!")
         } else if (bcrypt.compareSync(req.body.password, data.password)) {
+            // If user is found, compare hashed password and token to db records
             const token = jwt.sign({
                 username: data.username,
                 id: data._id
@@ -50,25 +57,27 @@ router.post("/login", (req, res) => {
                 user: data, token
             })
         } else {
+            // If information is incorrect, respond with 401 status code
             res.status(401).send("We don't serve your kind here.")
         }
     }).catch(err => {
-        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+        err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
     });
 });
 
 
 // Route to authenticate users
 router.get("/vip", (req, res) => {
-    // Verifying JWT token
+    // Verify JWT token
     let tokenData = authenticateMe(req);
     if (tokenData) {
+        // If token is associated with a user, send back user data
         db.User.findOne({
             _id: tokenData.id
         }).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+            err ? res.status(500).send(`FOOL! Due to your idiocy, ${err}`) : res.status(200).send("Success!")
         })
     }
 });
@@ -78,7 +87,8 @@ router.get("/api/user/:id", (req, res) => {
     db.User.findOne({
         _id: req.params.id
     }).then(data => {
-        res.json(data)
+        // If user is found, send back user data. If not, respond with 404 status code
+        data ? res.json(data) : res.status(404).send("You have no power here!")
     }).catch(err => {
         err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
     })
@@ -96,7 +106,7 @@ router.put("/levelup/:id", (req, res) => {
             health: 3
         }
     }, (err, data) => {
-        err ? res.send(err) : res.json(data)
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
     })
 })
 
@@ -109,7 +119,7 @@ router.put("/leveldown/:id", (req, res) => {
             level: -1
         }
     }, (err, data) => {
-        err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.json(data)
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
     })
 })
 
@@ -122,7 +132,7 @@ router.put("/healthdown/:id", (req, res) => {
             health: -1
         }
     }, (err, data) => {
-        err ? res.status(500).send(`Due to your idiocy, ${err}`) : res.json(data)
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
     })
 })
 
@@ -149,7 +159,6 @@ router.put("/switchtocat/:username", (req, res) => {
     }).then(data => {
         res.json(data)
     }).catch(err => {
-        console.log(`Error switching to cat:`, err);
         err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Switched to cat!")
     })
 })
@@ -163,7 +172,6 @@ router.put("/switchtomanatee/:username", (req, res) => {
     }).then(data => {
         res.json(data)
     }).catch(err => {
-        console.log(`Error switching to manatee:`, err);
         err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Switched to manatee!")
     })
 })
@@ -174,16 +182,19 @@ const authenticateMe = (req) => {
     let token = false;
 
     if (!req.headers) {
+        // If the request contains no authorization headers, return false
         token = false
     }
     else if (!req.headers.authorization) {
         token = false;
     }
     else {
+        // If authorization headers are present, remove the word "Bearer" to isolate the token
         token = req.headers.authorization.split(" ")[1];
     }
     let data = false;
     if (token) {
+        // Compare token to db records
         data = jwt.verify(token, config.secret, (err, data) => {
             if (err) {
                 return false;
@@ -192,6 +203,7 @@ const authenticateMe = (req) => {
             }
         })
     }
+    // If token matches, send back user data
     return data;
 }
 

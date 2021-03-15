@@ -1,11 +1,10 @@
 // Dependencies
-const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 // Schema instance
 const Schema = mongoose.Schema;
 
-// Shape our User object
+//User object
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -38,6 +37,7 @@ const UserSchema = new Schema({
 
 });
 
+// Export
 const User = mongoose.model("User", UserSchema)
 module.exports = User;
 

@@ -1,22 +1,9 @@
-// Dependencies and server config
+// Dependencies 
 const express = require("express");
 const mongoose = require("mongoose");
-const db = require("./models");
-const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
-// Set environment variables for port
-const PORT = process.env.PORT || 8080;
-
-// Express server instance
-const app = express();
-
-
-// Parse application body
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// Configure Cors
+// Cors config
 const whitelist = ["https://wizards-and-whiteboards.herokuapp.com", "http://localhost:3000"]
 
 const corsOptions = {
@@ -26,34 +13,43 @@ const corsOptions = {
     methods: "GET, HEAD, POST, PUT"
 }
 
-app.use(cors(corsOptions));
+// Environment variables
+// Port
+const PORT = process.env.PORT || 8080;
 
-// Connect to mongoose database
+// Database
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/htmlephant", {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true
 });
 
+// Express server instance
+const app = express();
 
-// Define routes
+// Middleware
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Routes
 const userRoutes = require("./controllers/userController");
-const npcRoutes = require("./controllers/npcController");
-const algoRoutes = require("./controllers/algoController");
-
-// Use routes
-app.use(npcRoutes);
 app.use(userRoutes);
+
+const npcRoutes = require("./controllers/npcController");
+app.use(npcRoutes);
+
+const algoRoutes = require("./controllers/algoController");
 app.use(algoRoutes);
 
-// In case anyone tries to visit the deployed server
+// Lovely greeting for anyone who tries to visit the deployed server
 app.get("/", (req, res) => {
     res.send("Go away, I'm trying to eat my mac and cheese.")
 })
 
-// Start our server so that it can begin listening to client requests.
+// Start server
 app.listen(PORT, () => {
-    console.log('App listening on PORT ' + PORT);
+    console.log(`Listening on port ${PORT}`);
 });
 
 

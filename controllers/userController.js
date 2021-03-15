@@ -91,7 +91,7 @@ router.put("/levelup/:id", (req, res) => {
     }, {
         $inc: {
             level: 1,
-        }, 
+        },
         $set: {
             health: 3
         }

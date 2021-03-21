@@ -123,7 +123,7 @@ router.put("/leveldown/:id", (req, res) => {
     })
 })
 
-// Update route to decrement user health by 5
+// Update route to decrement user health
 router.put("/healthdown/:id", (req, res) => {
     db.User.updateOne({
         _id: req.params.id
@@ -137,12 +137,12 @@ router.put("/healthdown/:id", (req, res) => {
 })
 
 
-// Update route to reset user level to 1
+// Update route to reset user health to 3
 router.put("/reset/:id", (req, res) => {
     db.User.updateOne({
         _id: req.params.id
     }, {
-        level: 1
+        health: 3
     }).then(data => {
         res.json(data)
     }).catch(err => {

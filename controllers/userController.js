@@ -15,7 +15,8 @@ router.post("/signup", (req, res) => {
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10),
         character: req.body.character,
-        level: 1
+        level: 1,
+        health: 3
     }).then(data => {
         if (data) {
             // If user is created, assign token and send back user data
@@ -125,15 +126,20 @@ router.put("/leveldown/:id", (req, res) => {
 
 // Update route to decrement user health
 router.put("/healthdown/:id", (req, res) => {
-    db.User.updateOne({
+    db.User.findOne({
         _id: req.params.id
-    }, {
-        $inc: {
-            health: -1
-        }
-    }, (err, data) => {
-        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
+    }).then(response => {
+        response.health <= 0 ? res.send("Oops, you're dead") : db.User.updateOne({
+            _id: req.params.id
+        }, {
+            $inc: {
+                health: -1
+            }
+        }, (err, data) => {
+            err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
+        })
     })
+
 })
 
 

@@ -30,9 +30,7 @@ const UserSchema = new Schema({
     health: {
         type: Number,
         required: true,
-        default: 3,
-        min: 0,
-        max: 3
+        min: [0, "Oops, you're dead."]
     }
 
 });

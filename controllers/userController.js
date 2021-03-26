@@ -129,7 +129,7 @@ router.put("/healthdown/:id", (req, res) => {
     db.User.findOne({
         _id: req.params.id
     }).then(response => {
-        response.health <= 0 ? res.send("Oops, you're dead") : db.User.updateOne({
+        response.health <= -1 ? res.send("Oops, you're dead") : db.User.updateOne({
             _id: req.params.id
         }, {
             $inc: {

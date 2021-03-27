@@ -156,6 +156,20 @@ router.put("/reset/:id", (req, res) => {
     })
 })
 
+// Update route to reset user level to 1
+router.put("/level1/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        level: 1,
+        health: 3
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.status(200).send("Success!")
+    })
+})
+
 // Update route to switch user from manatee to cat
 router.put("/switchtocat/:username", (req, res) => {
     db.User.updateOne({

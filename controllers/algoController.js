@@ -9,13 +9,13 @@ const router = express.Router()
 const seedAlgo = [
     {
         algorithm: "Write code to print the first character in a given string that is not a duplicate.",
-        question1: "A common whiteboard prompt will ask you to find the first NON-repeating character in a string. For example, I could ask you to find the first non-repeating letter in the string 'tacocat'. If the first thing I need to do is iterate through the string, what method would be best?",
+        question1: "A common whiteboard prompt will ask you to find the first NON-repeating character in a string. If I need to iterate through a string, what would I do?",
         answers1: ["for (let i = 0; i < string.length); i++", "i=map(string.length)", "(console.log(string.indexOf('o')"],
         correctAnswer1: "for (let i = 0; i < string.length); i++",
-        question2: "So you need a 'for loop' to return the first non-repeating character in a string, huh? I used to bullseye womp rats with a 'for loop' in my T-16. Good times! Anyway, a good method to use is IndexOf(). 'IndexOf' returns the first index at which a given element can be found in an array, or -1 if it's not in the array. Given the array: const food =['taco', 'burger', 'pizza', 'spaghetti'], the output of: console.log(food.indexOf('pizza') would be 2, because 'pizza' is the third item in the array. *Remember Array indices start at zero (0)*. Given the same 'food' array, at what index would 'burritos' be returned?",
+        question2: "So you need a 'for loop' to return the first non-repeating character in a string, huh? I used to bullseye womp rats with a 'for loop' in my T-16. Anyway, given the 'food' array: ['taco', 'burger', 'pizza', 'spaghetti'], what would be returned from food.indexOf('burrito')?",
         answers2: ["0", "5", "-1"],
         correctAnswer2: "-1",
-        question3: "Are these qustions making you feel 'loopy'? Don't give up! You've got two pieces of the puzzle, let's bring in a third and round out this triangle. To get the first non-repeating letter of the string, we know we can write a function that uses the 'for loop' and 'indexOf' methods. We can then apply conditional logic to see if the indexOf the character in the string is present. For example, how could you write a function that checks if the first letter in the string 'tacocat' is 't'?",
+        question3: "Are these qustions making you feel 'loopy'? Don't give up! How could I check if the first letter in the string 'tacocat' is 't'?",
         answers3: ["if (string.indexOf(t)== 0{ return true}", "if (string.indexOf(1) == t){ return true}", "if(string.indexOf(i)==0){return true}"],
         correctAnswer3: "if (string.indexOf(t)== 0{ return true}",
         difficulty: "Medium",

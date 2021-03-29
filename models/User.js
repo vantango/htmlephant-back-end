@@ -31,6 +31,11 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
         min: [0, "Oops, you're dead."]
+    },
+    keys: {
+        type: Number,
+        required: true,
+        max:[3, "Too many keys!"]
     }
 
 });

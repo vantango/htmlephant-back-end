@@ -16,7 +16,8 @@ router.post("/signup", (req, res) => {
         password: bcrypt.hashSync(req.body.password, 10),
         character: req.body.character,
         level: 1,
-        health: 3
+        health: 3,
+        keys: 0
     }).then(data => {
         if (data) {
             // If user is created, assign token and send back user data
@@ -142,13 +143,44 @@ router.put("/healthdown/:id", (req, res) => {
 
 })
 
+// Update route to increment keys
+router.put("/keyup/:id", (req, res) => {
+    db.User.findOne({
+        _id: req.params.id
+    }).then(response => {
+        response.keys === 3 ? res.send("Too many keys") : db.User.updateOne({
+            _id: req.params.id
+        }, {
+            $inc: {
+                keys: 1
+            }
+        }, (err, data) => {
+            err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
+        })
+    })
+})
 
-// Update route to reset user health to 3
+// Update route to take away keys
+router.put("/nokeys/:id", (req, res) => {
+    db.User.updateOne({
+        _id: req.params.id
+    }, {
+        $set: {
+            keys: 0
+        }
+    }, (err, data) => {
+        err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
+    })
+})
+
+
+// Update route to reset user health to 3, keys to 0
 router.put("/reset/:id", (req, res) => {
     db.User.updateOne({
         _id: req.params.id
     }, {
-        health: 3
+        health: 3,
+        keys: 0
     }).then(data => {
         res.json(data)
     }).catch(err => {
@@ -162,7 +194,8 @@ router.put("/level1/:id", (req, res) => {
         _id: req.params.id
     }, {
         level: 1,
-        health: 3
+        health: 3,
+        keys: 0
     }).then(data => {
         res.json(data)
     }).catch(err => {

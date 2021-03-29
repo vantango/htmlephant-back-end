@@ -105,7 +105,8 @@ router.put("/levelup/:id", (req, res) => {
             level: 1,
         },
         $set: {
-            health: 3
+            health: 3,
+            keys: 0
         }
     }, (err, data) => {
         err ? res.status(500).send(`Due to your idiocy, ${err.message}`) : res.json(data)
